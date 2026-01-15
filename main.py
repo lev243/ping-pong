@@ -28,7 +28,19 @@ class Platform(GameSprite):
             self.rect.y -= self.speed
         if keys[self.down] and self.rect.y < 800 - self.rect.height:
             self.rect.y += self.speed
-
+class Ball(GameSprite):
+    def __init__(self, player_img, player_x, player_y, player_speed, wight, height):
+        super().__init__(player_img, player_x, player_y, player_speed, wight, height)
+        self.player_speed_y = player_speed
+    def update(self, pl_1, pl_2):
+        self.rect.x += self.player_speed
+        self.rect.y += self.player_speed_y
+        if self.rect.y <= 0 or self.rect.y >= 800 - self.rect.height:
+            self.player_speed_y *= -1
+        if self.rect.colliderect(pl_1.rect) or self.rect.colliderect(pl_2.rect):
+            self.player_speed *= -1
+        
+        
 while game:
     window.fill(color_fon)
     for e in event.get():
